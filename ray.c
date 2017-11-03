@@ -106,16 +106,11 @@ int ray_trace(scene * scn, color ** pixels, int res_x, int res_y, int depth, int
 	{
 		for (j = res_x * -0.5; j < res_x * 0.5; j++)
 		{
-			if (i == -100 && j == 0)
+			if (i == 0 && j == 0)
 			{
 				abs(1);
 			}
 			ray_node * node = (ray_node *) malloc(sizeof(ray_node));
-			node->c.r = 0;
-			node->c.g = 0;
-			node->c.b = 0;
-			node->refl_ray = NULL;
-			node->shad_ray = NULL;
 
 			node->ray.pos.x = scn->cam->from.x;
 			node->ray.pos.y = scn->cam->from.y;
@@ -141,6 +136,11 @@ int ray_trace(scene * scn, color ** pixels, int res_x, int res_y, int depth, int
 
 int trace_ray(ray_node * ray, scene * scn, int max_depth, int depth)
 {
+	ray->c.r = 0;
+	ray->c.g = 0;
+	ray->c.b = 0;
+	ray->refl_ray = NULL;
+	ray->shad_ray = NULL;
 	material * mat;
 	vec_d * normal = (vec_d *) malloc(sizeof(vec_d));
 	vec_d * position = (vec_d *) malloc(sizeof(vec_d));
@@ -150,7 +150,10 @@ int trace_ray(ray_node * ray, scene * scn, int max_depth, int depth)
 		return 1;
 	}
 	int i;
-	calculateAmbient(&ray->c, mat, scn->amb_light);
+	if (scn->amb_light->r || scn->amb_light->g || scn->amb_light->b)
+	{
+		calculateAmbient(&ray->c, mat, scn->amb_light);
+	}
 	vec_d offset = vec_mult(normal, .001);
 	vec_d origin = sum_vecs(position, &offset);
 	for (i = 0; i < scn->light_count; i++)
@@ -161,18 +164,31 @@ int trace_ray(ray_node * ray, scene * scn, int max_depth, int depth)
 		ray->shad_ray->dir = lgt->to_dir;
 		if (!check_shadow_collide(ray->shad_ray, scn))
 		{
-			calculateDiffuse(&ray->c, mat, normal, lgt);
-			calculateSpecular(position, &ray->c, mat, normal, lgt, scn->cam);
+			if (mat->diff.r || mat->diff.g || mat->diff.b)
+			{
+				calculateDiffuse(&ray->c, mat, normal, lgt);
+			}
+			if (mat->spec.r || mat->spec.g || mat->spec.b)
+			{
+				calculateSpecular(position, &ray->c, mat, normal, lgt, scn->cam);
+			}
+		}
+		if ((mat->refl.r || mat->refl.g || mat->refl.b) && depth < max_depth)
+		{
+			ray->refl_ray = (ray_node *) malloc(sizeof(ray_node));
+			ray->refl_ray->ray.pos = origin;
+			vec_d v = vec_neg(&ray->ray.dir);
+			ray->refl_ray->ray.dir = vec_reflect(&v, normal);
+			trace_ray(ray->refl_ray, scn, max_depth, depth + 1);
+			ray->c.r += mat->refl.r * ray->refl_ray->c.r;
+			ray->c.g += mat->refl.g * ray->refl_ray->c.g;
+			ray->c.b += mat->refl.b * ray->refl_ray->c.b;
 		}
 	}
 
 	clamp_color(&ray->c);
 	
 	return 1;
-	/*
-		-Cast reflection
-			-reflection about normal = new ray node
-	*/
 }
 
 void destroy_node(ray_node * node)
@@ -237,7 +253,6 @@ int check_shadow_collide(ray_d * s_ray, scene * scn)
 		{
 			return 1;
 		}
-		i++;
 	}
 	for (i = 0; i < scn->triangle_count; i++)
 	{
@@ -246,7 +261,6 @@ int check_shadow_collide(ray_d * s_ray, scene * scn)
 		{
 			return 1;
 		}
-		i++;
 	}
 	return 0;
 }
@@ -291,7 +305,6 @@ int triangle_collide(ray_d * ray, triangle * tri, vec_d * position)
 	vec_d_2D * vec_2D = (vec_d_2D *) malloc(sizeof(vec_d_2D));
 	project_2D(tri, position, tri_2D, vec_2D);
 
-	//transform the projected objects so that vec_2D = (0, 0)
 	tri_2D->p1.u -= vec_2D->u;
 	tri_2D->p1.v -= vec_2D->v;
 	tri_2D->p2.u -= vec_2D->u;
@@ -379,8 +392,8 @@ void project_2D(triangle * tri, vec_d * vec, triangle_2D * tri_proj, vec_d_2D * 
 	{
 		tri_proj->p1.u = tri->p1.x;
 		tri_proj->p1.v = tri->p1.y;
-		tri_proj->p2.u = tri->p1.x;
-		tri_proj->p2.v = tri->p1.y;
+		tri_proj->p2.u = tri->p2.x;
+		tri_proj->p2.v = tri->p2.y;
 		tri_proj->p3.u = tri->p3.x;
 		tri_proj->p3.v = tri->p3.y;
 		vec_proj->u = vec->x;
@@ -408,7 +421,6 @@ void calculateDiffuse(color * c, material * mat, vec_d * normal, light * lgt)
 
 void calculateSpecular(vec_d * position, color * c, material * mat, vec_d * normal, light * lgt, camera * cam)
 {
-	//vec_d from_light = ;
 	vec_d reflection = vec_reflect(&lgt->to_dir, normal);
 	vec_d pos_to_camera = sub_vecs(&cam->from, position);
 	vec_normalize(&pos_to_camera);

@@ -37,7 +37,7 @@ int main(int argc, char * argv[])
 	}
 
 	color ** pixels = (color **) malloc(g_res * g_res * sizeof(color *));
-	if (!ray_trace(scn, pixels, g_res, g_res, 2, g_verbose))
+	if (!ray_trace(scn, pixels, g_res, g_res, 5, g_verbose))
 	{
 		free(pixels);
 		destroy_scene(scn);

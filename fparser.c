@@ -155,6 +155,10 @@ char * get_file_parse_error()
 
 int parse_line(char * line, int line_num, scene * scn)
 {
+	if (line[0] == '#')
+	{
+		return 1;
+	}
 	int w_count;
 	char ** split_line = strsplit(line, ' ', &w_count);
 	if (!strcmp(split_line[0], "CameraLookAt"))
