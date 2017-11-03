@@ -1,17 +1,48 @@
 CameraLookAt 0 0 0
 CameraLookFrom 0 0 1
 CameraLookUp 0 1 0
-FieldOfView 40
+FieldOfView 25
 DirectionToLight 1 1 .5 LightColor 1 1 1
-DirectionToLight -1 -1 .5 LightColor 1 1 1
-AmbientLight .06 .06 .06
+DirectionToLight -1 -1 .5 LightColor .7 .5 .5
+AmbientLight .11 .09 .09
 BackgroundColor .4 .4 .4
-Sphere Center 0 .3 0 Radius .2 Material Reflective .7 .4 .4 SpecularHighlight 1 1 1 PhongConstant 64
-Sphere Center 0 -.3 0 Radius .2 Material Reflective .4 .4 .7 SpecularHighlight 1 1 1 PhongConstant 64
-Sphere Center -.5 0 0 Radius .13 Material Diffuse 1 1 1 SpecularHighlight 1 1 1 PhongConstant 20
-Triangle -.3 .4 -.4 -.3 -.4 .4 -.3 -.4 -.4 Material Diffuse 1 1 1
-Triangle -.3 .4 -.4 -.3 .4 .4 -.3 -.4 .4 Material Diffuse 1 1 1
-Triangle .3 .4 -.4 .3 -.4 .4 .3 -.4 -.4 Material Diffuse 1 1 1
-Triangle .3 .4 -.4  .3 .4 .4  .3 -.4 .4 Material Diffuse 1 1 1
-Triangle -20 20 -10  -20 -20 -10  20 20 -10 Material Diffuse .9 .9 .6
-Triangle 20 20 -10  20 -20 -10  -20 -20 -10 Material Diffuse .6 .9 .9
+Sphere Center 0 .2 0 Radius .06 Material Reflective .7 .4 .4 SpecularHighlight 1 1 1 PhongConstant 64
+Sphere Center 0 0 -.7 Radius .2 Material Reflective .4 .7 .4 SpecularHighlight 1 1 1 PhongConstant 64
+
+Sphere Center 0 -.2 0 Radius .06 Material Reflective .4 .4 .7 SpecularHighlight 1 1 1 PhongConstant 64
+
+Sphere Center 1 1.05 -2.2 Radius .125 Material Diffuse 0 0 0 SpecularHighlight 1 1 1 PhongConstant 50
+Sphere Center 1 .75 -2.2 Radius .125 Material Diffuse 1 0 0 SpecularHighlight 1 1 1 PhongConstant 50
+Sphere Center 1 .45 -2.2 Radius .125 Material Diffuse 0 1 0 SpecularHighlight 1 1 1 PhongConstant 50
+Sphere Center 1 .15 -2.2 Radius .125 Material Diffuse 0 0 1 SpecularHighlight 1 1 1 PhongConstant 50
+Sphere Center 1 -.15 -2.2 Radius .125 Material Diffuse 1 1 0 SpecularHighlight 1 1 1 PhongConstant 50
+Sphere Center 1 -.45 -2.2 Radius .125 Material Diffuse 1 0 1 SpecularHighlight 1 1 1 PhongConstant 50
+Sphere Center 1 -.75 -2.2 Radius .125 Material Diffuse 0 1 1 SpecularHighlight 1 1 1 PhongConstant 50
+Sphere Center 1 -1.05 -2.2 Radius .125 Material Diffuse 1 1 1 SpecularHighlight 1 1 1 PhongConstant 50
+
+Triangle -.12 .2 -.4 -.12 -.2 .4 -.12 -.2 -.4 Material Diffuse 1 1 1
+Triangle -.12 .2 -.4 -.12 .2 .4 -.12 -.2 .4 Material Diffuse 1 1 1
+Triangle .12 .2 -.4 .12 -.2 .4 .12 -.2 -.4 Material Diffuse 1 1 1
+Triangle .12 .2 -.4  .12 .2 .4  .12 -.2 .4 Material Diffuse 1 1 1
+
+Triangle -4 4 -5  -4 -4 -5 4 4 -5 Material Diffuse .9 .9 .6
+Triangle 4 4 -5  4 -4 -5 -4 -4 -5 Material Diffuse .6 .9 .9
+
+Triangle -.21 .1 .5  -.21 .16 .5  -.15 .16 .5 Material Diffuse .8 .4 .4 SpecularHighlight 1 1 1 PhongConstant 4
+Triangle -.21 .1 .5  -.15 .1 .5  -.15 .16 .5 Material Diffuse .8 .4 .4 SpecularHighlight 1 1 1 PhongConstant 4
+Triangle -.15 .1 .5  -.15 .16 .5  -.15 .16 .44 Material Diffuse .8 .4 .4 SpecularHighlight 1 1 1 PhongConstant 4
+Triangle -.15 .1 .5  -.15 .1 .44  -.15 .16 .44 Material Diffuse .8 .4 .4 SpecularHighlight 1 1 1 PhongConstant 4
+Triangle -.21 .1 .44  -.21 .1 .5  -.15 .1 .5 Material Diffuse .8 .4 .4 SpecularHighlight 1 1 1 PhongConstant 4
+Triangle -.21 .1 .44  -.15 .1 .44  -.15 .1 .5 Material Diffuse .8 .4 .4 SpecularHighlight 1 1 1 PhongConstant 4
+
+Triangle -.21 -.03 .5  -.21 .03 .5  -.15 .03 .5 Material Diffuse .4 .8 .4 SpecularHighlight 1 1 1 PhongConstant 4
+Triangle -.21 -.03 .5  -.15 -.03 .5  -.15 .03 .5 Material Diffuse .4 .8 .4 SpecularHighlight 1 1 1 PhongConstant 4
+Triangle -.15 -.03 .5  -.15 .03 .5  -.15 .03 .44 Material Diffuse .4 .8 .4 SpecularHighlight 1 1 1 PhongConstant 4
+Triangle -.15 -.03 .5  -.15 -.03 .44  -.15 .03 .44 Material Diffuse .4 .8 .4 SpecularHighlight 1 1 1 PhongConstant 4
+
+Triangle -.21 -.1 .5  -.21 -.16 .5  -.15 -.16 .5 Material Diffuse .4 .4 .8 SpecularHighlight 1 1 1 PhongConstant 4
+Triangle -.21 -.1 .5  -.15 -.1 .5  -.15 -.16 .5 Material Diffuse .4 .4 .8 SpecularHighlight 1 1 1 PhongConstant 4
+Triangle -.15 -.1 .5  -.15 -.16 .5  -.15 -.16 .44 Material Diffuse .4 .4 .8 SpecularHighlight 1 1 1 PhongConstant 4
+Triangle -.15 -.1 .5  -.15 -.1 .44  -.15 -.16 .44 Material Diffuse .4 .4 .8 SpecularHighlight 1 1 1 PhongConstant 4
+Triangle -.21 -.1 .44  -.21 -.1 .5  -.15 -.1 .5 Material Diffuse .4 .4 .8 SpecularHighlight 1 1 1 PhongConstant 4
+Triangle -.21 -.1 .44  -.15 -.1 .44  -.15 -.1 .5 Material Diffuse .4 .4 .8 SpecularHighlight 1 1 1 PhongConstant 4

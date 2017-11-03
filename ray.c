@@ -319,6 +319,9 @@ int triangle_collide(ray_d * ray, triangle * tri, vec_d * position)
 	check_cross(&tri_2D->p2, &tri_2D->p3, &cross_count, &sign);
 	check_cross(&tri_2D->p3, &tri_2D->p1, &cross_count, &sign);
 
+	free(tri_2D);
+	free(vec_2D);
+
 	return cross_count % 2 ? 1 : 0;
 }
 

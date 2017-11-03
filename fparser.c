@@ -155,7 +155,7 @@ char * get_file_parse_error()
 
 int parse_line(char * line, int line_num, scene * scn)
 {
-	if (line[0] == '#')
+	if (line[0] == '#' || line[0] == '\n')
 	{
 		return 1;
 	}
