@@ -37,6 +37,7 @@ void destroy_scene_counts(scene * scn, int light_count, int sphere_count, int tr
 		free(scn->triangles[i]);
 	}
 	free(scn->triangles);
+	free(scn);
 }
 
 void destroy_scene(scene * scn)
@@ -62,6 +63,7 @@ void destroy_scene(scene * scn)
 		free(scn->triangles[i]);
 	}
 	free(scn->triangles);
+	free(scn);
 }
 
 void init_material(material * mat)

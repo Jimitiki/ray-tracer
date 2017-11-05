@@ -246,7 +246,6 @@ int parse_light(char ** strs, int w_count, scene * scn)
 		return 0;
 	}
 	errno = 0;
-	char * e = NULL;
 	int i = 0;
 	light * l = (light *) malloc(sizeof(light));
 	while (i < 8)
@@ -282,15 +281,13 @@ int parse_light(char ** strs, int w_count, scene * scn)
 }
 int parse_sphere(char ** strs, int w_count, scene * scn)
 {
-	if (w_count < 7 || w_count > 7 && strcmp(strs[7], "Material"))
+	if (w_count < 7 || (w_count > 7 && strcmp(strs[7], "Material")))
 	{
 		snprintf(g_parse_err, LEN_ERROR, "Invalid number of parameters given for Sphere");
 		return 0;
 	}
 	int i = 1;
 	sphere * s = (sphere *) malloc(sizeof(sphere));
-	char * e = NULL;
-	errno = 0;
 	while (i < 7)
 	{
 		if (!strcmp(strs[i], "Center"))
@@ -341,7 +338,7 @@ int parse_sphere(char ** strs, int w_count, scene * scn)
 
 int parse_triangle(char ** strs, int w_count, scene * scn)
 {
-	if (w_count < 10 || w_count > 10 && strcmp(strs[10], "Material"))
+	if (w_count < 10 || (w_count > 10 && strcmp(strs[10], "Material")))
 	{
 		snprintf(g_parse_err, LEN_ERROR, "Invalid number of parameters given for Triangle");
 		return 0;
@@ -437,7 +434,7 @@ int parse_material(char ** strs, int w_count, material * mat)
 	{
 		return 1;
 	}
-	if (w_count < 4 || w_count > 15 || w_count == 4 && strcmp(strs[1], "Diffuse") && strcmp(strs[1], "Reflective"))
+	if (w_count < 4 || w_count > 15 || (w_count == 4 && strcmp(strs[1], "Diffuse") && strcmp(strs[1], "Reflective")))
 	{
 		snprintf(g_parse_err, LEN_ERROR, "Invalid number of parameters given for Material");
 		return 0;
@@ -448,7 +445,6 @@ int parse_material(char ** strs, int w_count, material * mat)
 		return 0;
 	}
 	int i = 1;
-	char * e = "\0";
 	while (i < w_count)
 	{
 		if (!strcmp(strs[i], "Diffuse"))

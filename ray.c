@@ -4,6 +4,9 @@
 #include <math.h>
 #include "ray.h"
 
+#define max(a, b) (a > b ? a : b)
+#define min(a, b) (a < b ? a : b)
+
 //These two structs are only used to check intersections of rays with triangles
 typedef struct
 {
@@ -42,6 +45,8 @@ int trace_ray(ray_node * ray, scene * scn, int max_depth, int depth);
 * @return int 0 if no collisions are detected, positive number if ray intersects an object
 */
 int check_collide(ray_d * ray, scene * scn, vec_d * position, vec_d * normal, material ** mat);
+
+int check_shadow_collide(ray_d * s_ray, scene * scn);
 
 /**
 * Two similar functions, check if a ray intersects with a sphere/triangle
@@ -147,6 +152,8 @@ int trace_ray(ray_node * ray, scene * scn, int max_depth, int depth)
 	if (!check_collide(&ray->ray, scn, position, normal, &mat))
 	{
 		ray->c = *scn->bg_color;
+		free(normal);
+		free(position);
 		return 1;
 	}
 	int i;
@@ -185,7 +192,8 @@ int trace_ray(ray_node * ray, scene * scn, int max_depth, int depth)
 			ray->c.b += mat->refl.b * ray->refl_ray->c.b;
 		}
 	}
-
+	free(position);
+	free(normal);
 	clamp_color(&ray->c);
 	
 	return 1;
